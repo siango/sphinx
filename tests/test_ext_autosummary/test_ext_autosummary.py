@@ -21,6 +21,7 @@ from sphinx.ext.autosummary import (
 )
 from sphinx.ext.autosummary.generate import (
     AutosummaryEntry,
+    _underline,
     generate_autosummary_content,
     generate_autosummary_docs,
 )
@@ -51,6 +52,10 @@ defaults = {
 @pytest.fixture(autouse=True)
 def _unload_target_module():
     sys.modules.pop('target', None)
+
+
+def test_underline_east_asian_characters() -> None:
+    assert _underline('悠好') == '悠好\n===='
 
 
 def test_mangle_signature() -> None:
