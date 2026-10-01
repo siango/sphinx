@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING, NamedTuple
 
 from jinja2 import TemplateNotFound
 from jinja2.sandbox import SandboxedEnvironment
+from docutils.utils import column_width
 
 import sphinx.locale
 from sphinx import __display_version__, package_dir
@@ -110,7 +111,7 @@ def _underline(title: str, line: str = '=') -> str:
     if '\n' in title:
         msg = 'Can only underline single lines'
         raise ValueError(msg)
-    return title + '\n' + line * len(title)
+    return title + '\n' + line * column_width(title)
 
 
 class AutosummaryRenderer:
@@ -404,7 +405,7 @@ def generate_autosummary_content(
     ns['name'] = shortname
 
     ns['objtype'] = obj_type
-    ns['underline'] = len(name) * '='
+    ns['underline'] = column_width(name) * '='
 
     if template_name:
         return template.render(template_name, ns)
